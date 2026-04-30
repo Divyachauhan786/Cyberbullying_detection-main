@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyberbullying Detection System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Ambient background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo-mark">
+        <span class="logo-icon">🛡️</span>
+        <span class="logo-text">SafeGuard <em>AI</em></span>
+      </div>
+      <nav class="header-nav">
+        <span class="nav-badge">v2.4</span>
+        <span class="nav-badge accent">● Live</span>
+      </nav>
+    </header>
+
+    <!-- Main Card -->
+    <main class="main-card" id="mainCard">
+
+      <!-- Card Header -->
+      <div class="card-hero">
+        <div class="card-hero-tag">AI-Powered Analysis</div>
+        <h1 class="card-title">Cyberbullying<br /><span class="title-accent">Detection System</span></h1>
+        <p class="card-subtitle">Analyze text in real-time to detect harmful content, threats, hate speech, and more — powered by machine learning.</p>
+        <div class="stats-row">
+          <div class="stat-chip">
+            <span class="stat-num">98.2%</span>
+            <span class="stat-label">Accuracy</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-chip">
+            <span class="stat-num">5</span>
+            <span class="stat-label">Categories</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-chip">
+            <span class="stat-num">&lt;1s</span>
+            <span class="stat-label">Latency</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Section -->
+      <div class="input-section">
+        <div class="textarea-wrapper">
+          <label class="textarea-label" for="textInput">
+            <span>📝</span> Enter text to analyze
+          </label>
+          <textarea
+            id="textInput"
+            class="text-input"
+            placeholder="Paste or type any message, comment, or post here…&#10;&#10;Examples:&#10;• Social media comments&#10;• Online chat messages&#10;• Forum posts&#10;• Email content"
+            maxlength="2000"
+            spellcheck="true"
+          ></textarea>
+          <div class="textarea-footer">
+            <div class="char-counter">
+              <span id="charCount">0</span>
+              <span class="char-max">/ 2000</span>
+            </div>
+            <button class="clear-btn" id="clearBtn" title="Clear input">
+              <span>✕</span> Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Analyze Button -->
+    
+        <button class="analyze-btn" id="analyzeBtn">
+          <span class="btn-icon">⚡</span>
+          <span class="btn-text">Analyze Text</span>
+          <span class="btn-shimmer"></span>
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div class="loading-state" id="loadingState" aria-live="polite" aria-hidden="true">
+        <div class="spinner-ring">
+          <div class="spinner-inner"></div>
+        </div>
+        <div class="loading-text">
+          <p class="loading-title">Analyzing content…</p>
+          <p class="loading-sub">Running classification model</p>
+        </div>
+        <div class="loading-steps">
+          <div class="step active" id="step1">
+            <span class="step-dot"></span>Tokenizing text
+          </div>
+          <div class="step" id="step2">
+            <span class="step-dot"></span>Running inference
+          </div>
+          <div class="step" id="step3">
+            <span class="step-dot"></span>Building report
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Section -->
+      <div class="result-section" id="resultSection" aria-live="polite">
+
+        <!-- Verdict Banner -->
+        <div class="verdict-banner" id="verdictBanner">
+          <div class="verdict-icon" id="verdictIcon"></div>
+          <div class="verdict-content">
+            <div class="verdict-label" id="verdictLabel">Detection Result</div>
+            <div class="verdict-value" id="verdictValue"></div>
+          </div>
+          <div class="verdict-badge" id="verdictBadge"></div>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="metrics-row">
+
+          <!-- Category Card -->
+          <div class="metric-card" id="categoryCard">
+            <div class="metric-top">
+              <span class="metric-icon" id="categoryIcon"></span>
+              <span class="metric-title">Category</span>
+            </div>
+            <div class="metric-value" id="categoryValue">—</div>
+            <div class="metric-sub" id="categorySub"></div>
+          </div>
+
+          <!-- Confidence Card -->
+          <div class="metric-card" id="confidenceCard">
+            <div class="metric-top">
+              <span class="metric-icon">📊</span>
+              <span class="metric-title">Confidence</span>
+            </div>
+            <div class="confidence-display">
+              <div class="confidence-number" id="confidenceNumber">—</div>
+              <div class="confidence-bar-track">
+                <div class="confidence-bar-fill" id="confidenceFill"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Risk Factors -->
+        <div class="risk-section" id="riskSection">
+          <div class="risk-header">
+            <span>🔍</span> Detected Signals
+          </div>
+          <div class="risk-tags" id="riskTags"></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="result-actions">
+          <button class="action-btn secondary" id="reAnalyzeBtn">
+            <span>🔄</span> Re-analyze
+          </button>
+          <button class="action-btn primary" id="copyReportBtn">
+            <span>📋</span> Copy Report
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Error State -->
+      <div class="error-state" id="errorState" aria-live="assertive">
+        <div class="error-icon">⚠️</div>
+        <div class="error-title">Analysis Failed</div>
+        <div class="error-msg" id="errorMsg">Could not connect to server. Please try again.</div>
+        <button class="retry-btn" id="retryBtn">Retry</button>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>SafeGuard AI — For educational &amp; research purposes only</p>
+      <p class="footer-sub">Powered by NLP Classification Model · Flask Backend Required</p>
+    </footer>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
