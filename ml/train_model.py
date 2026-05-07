@@ -42,5 +42,5 @@ os.makedirs(model_path, exist_ok=True)
 pickle.dump(model, open(os.path.join(model_path, "model.pkl"), "wb"))
 pickle.dump(vectorizer, open(os.path.join(model_path, "vectorizer.pkl"), "wb"))
 
-print("✅ Model & Vectorizer saved")
+print(" Model & Vectorizer saved")
 

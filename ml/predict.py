@@ -1,23 +1,29 @@
 import pickle
-import numpy as np
-from ml.preprocessing import clean_text
+import os
 
-model = pickle.load(open("models/model.pkl", "rb"))
-vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
+# Paths
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+model_path = os.path.join(BASE_DIR, "models", "model.pkl")
+vectorizer_path = os.path.join(BASE_DIR, "models", "vectorizer.pkl")
+
+# Load model
+with open(model_path, "rb") as f:
+    model = pickle.load(f)
+
+# Load vectorizer
+with open(vectorizer_path, "rb") as f:
+    vectorizer = pickle.load(f)
 
 
 def predict_text(text):
-    cleaned = clean_text(text)
-    vector = vectorizer.transform([cleaned])
+    try:
+        text_vector = vectorizer.transform([text])
+        prediction = model.predict(text_vector)
 
-    # Prediction label
-    prediction = model.predict(vector)[0]
+        
+        return str(prediction[0]).lower().strip().replace("_", " ")
 
-    # Confidence (if model supports predict_proba)
-    if hasattr(model, "predict_proba"):
-        probs = model.predict_proba(vector)[0]
-        confidence = float(np.max(probs))
-    else:
-        confidence = None
-
-    return prediction, confidence
+    except Exception as e:
+        print("Prediction error:", e)
+        return "not cyberbullying"

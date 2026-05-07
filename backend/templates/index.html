@@ -3,193 +3,481 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cyberbullying Detection System</title>
+  <title>SafeGuard AI — Cyberbullying Detection</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- Ambient background orbs -->
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-orb orb-3"></div>
+  <!-- Grain overlay -->
+  <div class="grain"></div>
+
+  <!-- Background -->
+  <div class="bg-mesh"></div>
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
 
   <div class="page-wrapper">
 
-    <!-- Header -->
+    <!-- ── HEADER ── -->
     <header class="site-header">
       <div class="logo-mark">
-        <span class="logo-icon">🛡️</span>
-        <span class="logo-text">SafeGuard <em>AI</em></span>
+        <div class="logo-shield">
+          <span>⬡</span>
+        </div>
+        <div class="logo-text-group">
+          <span class="logo-name">SafeGuard</span>
+          <span class="logo-sub">AI Detection System</span>
+        </div>
       </div>
-      <nav class="header-nav">
-        <span class="nav-badge">v2.4</span>
-        <span class="nav-badge accent">● Live</span>
+      <nav class="header-right">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>System Online</span>
+        </div>
+        <span class="ver-badge">v3.0</span>
       </nav>
     </header>
 
-    <!-- Main Card -->
-    <main class="main-card" id="mainCard">
-
-      <!-- Card Header -->
-      <div class="card-hero">
-        <div class="card-hero-tag">AI-Powered Analysis</div>
-        <h1 class="card-title">Cyberbullying<br /><span class="title-accent">Detection System</span></h1>
-        <p class="card-subtitle">Analyze text in real-time to detect harmful content, threats, hate speech, and more — powered by machine learning.</p>
-        <div class="stats-row">
-          <div class="stat-chip">
-            <span class="stat-num">98.2%</span>
-            <span class="stat-label">Accuracy</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-chip">
-            <span class="stat-num">5</span>
-            <span class="stat-label">Categories</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-chip">
-            <span class="stat-num">&lt;1s</span>
-            <span class="stat-label">Latency</span>
-          </div>
+    <!-- ── HERO ── -->
+    <section class="hero-section">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-line"></span>
+        <span>AI-Powered Content Analysis</span>
+        <span class="eyebrow-line"></span>
+      </div>
+      <h1 class="hero-title">
+        Detect <em>Cyberbullying</em><br/>Before It Causes Harm
+      </h1>
+      <p class="hero-sub">Analyze text and YouTube comment sections in real-time using machine learning trained on millions of online interactions.</p>
+      <div class="hero-stats">
+        <div class="hstat">
+          <span class="hstat-n">98.2<small>%</small></span>
+          <span class="hstat-l">Accuracy</span>
+        </div>
+        <div class="hstat-sep"></div>
+        <div class="hstat">
+          <span class="hstat-n">5</span>
+          <span class="hstat-l">Categories</span>
+        </div>
+        <div class="hstat-sep"></div>
+        <div class="hstat">
+          <span class="hstat-n">&lt;1<small>s</small></span>
+          <span class="hstat-l">Latency</span>
+        </div>
+        <div class="hstat-sep"></div>
+        <div class="hstat">
+          <span class="hstat-n">20</span>
+          <span class="hstat-l">Comments/Scan</span>
         </div>
       </div>
+    </section>
 
-      <!-- Input Section -->
-      <div class="input-section">
-        <div class="textarea-wrapper">
-          <label class="textarea-label" for="textInput">
-            <span>📝</span> Enter text to analyze
-          </label>
-          <textarea
-            id="textInput"
-            class="text-input"
-            placeholder="Paste or type any message, comment, or post here…&#10;&#10;Examples:&#10;• Social media comments&#10;• Online chat messages&#10;• Forum posts&#10;• Email content"
-            maxlength="2000"
-            spellcheck="true"
-          ></textarea>
-          <div class="textarea-footer">
-            <div class="char-counter">
-              <span id="charCount">0</span>
-              <span class="char-max">/ 2000</span>
-            </div>
-            <button class="clear-btn" id="clearBtn" title="Clear input">
-              <span>✕</span> Clear
-            </button>
-          </div>
-        </div>
+    <!-- ── MAIN CARD ── -->
+    <main class="main-card">
 
-        <!-- Analyze Button -->
-    
-        <button class="analyze-btn" id="analyzeBtn">
-          <span class="btn-icon">⚡</span>
-          <span class="btn-text">Analyze Text</span>
-          <span class="btn-shimmer"></span>
+      <!-- Tab Navigation -->
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="text">
+          <span class="tab-icon">✦</span>Text Analysis
         </button>
+        <button class="tab-btn" data-tab="youtube">
+          <span class="tab-icon">▶</span>YouTube Scanner
+        </button>
+        <button class="tab-btn" data-tab="prevention">
+          <span class="tab-icon">◈</span>Prevention Guide
+        </button>
+        <div class="tab-indicator" id="tabIndicator"></div>
       </div>
 
-      <!-- Loading State -->
-      <div class="loading-state" id="loadingState" aria-live="polite" aria-hidden="true">
-        <div class="spinner-ring">
-          <div class="spinner-inner"></div>
-        </div>
-        <div class="loading-text">
-          <p class="loading-title">Analyzing content…</p>
-          <p class="loading-sub">Running classification model</p>
-        </div>
-        <div class="loading-steps">
-          <div class="step active" id="step1">
-            <span class="step-dot"></span>Tokenizing text
-          </div>
-          <div class="step" id="step2">
-            <span class="step-dot"></span>Running inference
-          </div>
-          <div class="step" id="step3">
-            <span class="step-dot"></span>Building report
-          </div>
-        </div>
-      </div>
+      <!-- ════════════════════════════════
+           TAB 1 — TEXT ANALYSIS
+      ════════════════════════════════ -->
+      <div class="tab-panel active" id="tab-text">
+        <div class="panel-body">
 
-      <!-- Result Section -->
-      <div class="result-section" id="resultSection" aria-live="polite">
-
-        <!-- Verdict Banner -->
-        <div class="verdict-banner" id="verdictBanner">
-          <div class="verdict-icon" id="verdictIcon"></div>
-          <div class="verdict-content">
-            <div class="verdict-label" id="verdictLabel">Detection Result</div>
-            <div class="verdict-value" id="verdictValue"></div>
-          </div>
-          <div class="verdict-badge" id="verdictBadge"></div>
-        </div>
-
-        <!-- Metrics Row -->
-        <div class="metrics-row">
-
-          <!-- Category Card -->
-          <div class="metric-card" id="categoryCard">
-            <div class="metric-top">
-              <span class="metric-icon" id="categoryIcon"></span>
-              <span class="metric-title">Category</span>
+          <div class="input-group">
+            <div class="input-header">
+              <label class="input-label" for="textInput">Input Text</label>
+              <span class="input-hint">Ctrl+Enter to analyze</span>
             </div>
-            <div class="metric-value" id="categoryValue">—</div>
-            <div class="metric-sub" id="categorySub"></div>
-          </div>
-
-          <!-- Confidence Card -->
-          <div class="metric-card" id="confidenceCard">
-            <div class="metric-top">
-              <span class="metric-icon">📊</span>
-              <span class="metric-title">Confidence</span>
-            </div>
-            <div class="confidence-display">
-              <div class="confidence-number" id="confidenceNumber">—</div>
-              <div class="confidence-bar-track">
-                <div class="confidence-bar-fill" id="confidenceFill"></div>
+            <div class="textarea-shell">
+              <textarea id="textInput" class="text-input"
+                placeholder="Paste any message, comment, post, or conversation here…&#10;&#10;Examples: social media comments · chat messages · forum posts · emails"
+                maxlength="2000" spellcheck="true"></textarea>
+              <div class="textarea-chrome">
+                <span class="char-counter"><span id="charCount">0</span><span class="char-max"> / 2000</span></span>
+                <button class="ghost-btn" id="clearBtn">✕ Clear</button>
               </div>
             </div>
           </div>
 
+          <button class="primary-btn" id="analyzeBtn">
+            <span class="btn-icon-wrap">✦</span>
+            <span class="btn-label">Analyze Text</span>
+            <span class="btn-shimmer"></span>
+          </button>
+
         </div>
 
-        <!-- Risk Factors -->
-        <div class="risk-section" id="riskSection">
-          <div class="risk-header">
-            <span>🔍</span> Detected Signals
+        <!-- Loading -->
+        <div class="loader-panel" id="loadingState">
+          <div class="loader-ring">
+            <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" /></svg>
           </div>
-          <div class="risk-tags" id="riskTags"></div>
+          <div class="loader-info">
+            <p class="loader-title">Analyzing content…</p>
+            <p class="loader-sub">Running NLP classification pipeline</p>
+          </div>
+          <div class="loader-steps">
+            <div class="lstep active" id="step1"><span class="lstep-dot"></span>Tokenizing</div>
+            <div class="lstep" id="step2"><span class="lstep-dot"></span>Inference</div>
+            <div class="lstep" id="step3"><span class="lstep-dot"></span>Report</div>
+          </div>
         </div>
 
-        <!-- Actions -->
-        <div class="result-actions">
-          <button class="action-btn secondary" id="reAnalyzeBtn">
-            <span>🔄</span> Re-analyze
-          </button>
-          <button class="action-btn primary" id="copyReportBtn">
-            <span>📋</span> Copy Report
-          </button>
+        <!-- Result -->
+        <div class="result-panel" id="resultSection">
+
+          <div class="verdict-strip" id="verdictBanner">
+            <div class="verdict-emoji" id="verdictIcon"></div>
+            <div class="verdict-info">
+              <div class="verdict-eyebrow">Detection Result</div>
+              <div class="verdict-title" id="verdictValue"></div>
+            </div>
+            <div class="verdict-pill" id="verdictBadge"></div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-tile">
+              <div class="metric-tile-top">
+                <span class="metric-tile-icon" id="categoryIcon"></span>
+                <span class="metric-tile-label">Category</span>
+              </div>
+              <div class="metric-tile-value" id="categoryValue">—</div>
+              <div class="metric-tile-sub" id="categorySub"></div>
+            </div>
+            <div class="metric-tile">
+              <div class="metric-tile-top">
+                <span class="metric-tile-icon">◈</span>
+                <span class="metric-tile-label">Confidence</span>
+              </div>
+              <div class="conf-number" id="confidenceNumber">—</div>
+              <div class="conf-track"><div class="conf-fill" id="confidenceFill"></div></div>
+            </div>
+          </div>
+
+          <div class="signals-block">
+            <div class="signals-header">◆ Detected Signals</div>
+            <div class="signals-wrap" id="riskTags"></div>
+          </div>
+
+          <div class="result-actions">
+            <button class="ghost-btn-lg" id="reAnalyzeBtn">↺ Re-analyze</button>
+            <button class="gold-btn" id="copyReportBtn">⬡ Copy Report</button>
+          </div>
+
         </div>
 
-      </div>
+        <!-- Error -->
+        <div class="error-panel" id="errorState">
+          <div class="error-glyph">△</div>
+          <div class="error-title">Analysis Failed</div>
+          <div class="error-msg" id="errorMsg">Could not connect to server.</div>
+          <button class="ghost-btn-lg" id="retryBtn">↺ Retry</button>
+        </div>
 
-      <!-- Error State -->
-      <div class="error-state" id="errorState" aria-live="assertive">
-        <div class="error-icon">⚠️</div>
-        <div class="error-title">Analysis Failed</div>
-        <div class="error-msg" id="errorMsg">Could not connect to server. Please try again.</div>
-        <button class="retry-btn" id="retryBtn">Retry</button>
-      </div>
+      </div><!-- /tab-text -->
+
+
+      <!-- ════════════════════════════════
+           TAB 2 — YOUTUBE SCANNER
+      ════════════════════════════════ -->
+      <div class="tab-panel" id="tab-youtube">
+        <div class="panel-body">
+
+          <div class="input-group">
+            <div class="input-header">
+              <label class="input-label">YouTube Video URL</label>
+              <span class="input-hint">Supports youtube.com · youtu.be · Shorts</span>
+            </div>
+            <div class="url-shell">
+              <span class="url-prefix-icon">▶</span>
+              <input type="url" id="ytUrlInput" class="url-input"
+                placeholder="https://www.youtube.com/watch?v=..." />
+            </div>
+          </div>
+
+          <button class="primary-btn" id="ytAnalyzeBtn">
+            <span class="btn-icon-wrap">▶</span>
+            <span class="btn-label">Scan Comments</span>
+            <span class="btn-shimmer"></span>
+          </button>
+
+        </div>
+
+        <!-- YouTube Loading -->
+        <div class="loader-panel" id="ytLoadingState">
+          <div class="loader-ring">
+            <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" /></svg>
+          </div>
+          <div class="loader-info">
+            <p class="loader-title">Scanning comments…</p>
+            <p class="loader-sub">Fetching &amp; classifying top 20 comments</p>
+          </div>
+          <div class="loader-steps">
+            <div class="lstep active" id="yt-step1"><span class="lstep-dot"></span>Fetching video</div>
+            <div class="lstep" id="yt-step2"><span class="lstep-dot"></span>Loading comments</div>
+            <div class="lstep" id="yt-step3"><span class="lstep-dot"></span>Analyzing all</div>
+          </div>
+        </div>
+
+        <!-- YouTube Results -->
+        <div class="yt-results" id="ytResultSection">
+
+          <!-- Video card -->
+          <div class="video-card" id="videoInfoCard">
+            <img class="video-thumb" id="videoThumbnail" src="" alt="" />
+            <div class="video-meta">
+              <div class="video-title" id="videoTitle"></div>
+              <div class="video-channel" id="videoChannel"></div>
+            </div>
+          </div>
+
+          <!-- Summary stats -->
+          <div class="yt-stats-bar" id="ytSummaryRow">
+            <div class="yt-stat safe-stat">
+              <span class="yt-stat-n" id="yt-safe-count">0</span>
+              <span class="yt-stat-l">✅ Safe</span>
+            </div>
+            <div class="yt-stat danger-stat">
+              <span class="yt-stat-n" id="yt-flagged-count">0</span>
+              <span class="yt-stat-l">🚫 Flagged</span>
+            </div>
+            <div class="yt-stat total-stat">
+              <span class="yt-stat-n" id="yt-total-count">0</span>
+              <span class="yt-stat-l">💬 Total</span>
+            </div>
+            <div class="yt-stat pct-stat">
+              <span class="yt-stat-n" id="yt-flagged-pct">0%</span>
+              <span class="yt-stat-l">⚠️ Harmful Rate</span>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="charts-section">
+            <div class="charts-header">◆ Analysis Visualizations</div>
+            <div class="charts-grid">
+              <!-- Pie chart -->
+              <div class="chart-card">
+                <div class="chart-card-title">Category Breakdown</div>
+                <div class="pie-wrapper">
+                  <canvas id="pieChart" width="200" height="200"></canvas>
+                  <div class="pie-legend" id="pieLegend"></div>
+                </div>
+              </div>
+              <!-- Bar chart -->
+              <div class="chart-card">
+                <div class="chart-card-title">Safe vs Harmful Timeline</div>
+                <canvas id="barChart" width="400" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter bar -->
+          <div class="filter-row">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-chip active" data-filter="all">All</button>
+            <button class="filter-chip" data-filter="harmful">🚫 Harmful</button>
+            <button class="filter-chip" data-filter="safe">✅ Safe</button>
+          </div>
+
+          <!-- Comments table -->
+          <div class="table-shell">
+            <table class="comments-table">
+              <thead>
+                <tr>
+                  <th>Author</th>
+                  <th>Comment</th>
+                  <th>Result</th>
+                  <th>Confidence</th>
+                </tr>
+              </thead>
+              <tbody id="commentsTableBody"></tbody>
+            </table>
+          </div>
+
+          <!-- Actions -->
+          <div class="yt-actions">
+            <button class="ghost-btn-lg" id="ytResetBtn">↺ New Scan</button>
+            <button class="gold-btn" id="exportCsvBtn">⬇ Export CSV</button>
+          </div>
+
+        </div><!-- /ytResults -->
+
+        <!-- YouTube Error -->
+        <div class="error-panel" id="ytErrorState">
+          <div class="error-glyph">△</div>
+          <div class="error-title">Scan Failed</div>
+          <div class="error-msg" id="ytErrorMsg">Could not analyze this video.</div>
+          <button class="ghost-btn-lg" id="ytRetryBtn">↺ Retry</button>
+        </div>
+
+      </div><!-- /tab-youtube -->
+
+
+      <!-- ════════════════════════════════
+           TAB 3 — PREVENTION GUIDE
+      ════════════════════════════════ -->
+      <div class="tab-panel" id="tab-prevention">
+        <div class="prevention-body">
+
+          <div class="prev-hero">
+            <div class="prev-hero-icon">◈</div>
+            <h2 class="prev-hero-title">Prevention & Safety Guide</h2>
+            <p class="prev-hero-sub">If you or someone you know is experiencing cyberbullying, here's how to stay safe and take action.</p>
+          </div>
+
+          <!-- Tips grid -->
+          <div class="tips-section">
+            <div class="section-eyebrow"><span class="eyebrow-line"></span>How to Respond<span class="eyebrow-line"></span></div>
+            <div class="tips-grid">
+              <div class="tip-card">
+                <div class="tip-icon">🛑</div>
+                <div class="tip-title">Don't Engage</div>
+                <div class="tip-body">Avoid responding to bullies. Reacting often encourages more harmful behavior. Take a breath and step away from the screen.</div>
+              </div>
+              <div class="tip-card">
+                <div class="tip-icon">📸</div>
+                <div class="tip-title">Document Everything</div>
+                <div class="tip-body">Take screenshots of harmful messages, comments, and profiles. Include timestamps and URLs. Evidence is critical for reporting.</div>
+              </div>
+              <div class="tip-card">
+                <div class="tip-icon">🚫</div>
+                <div class="tip-title">Block & Restrict</div>
+                <div class="tip-body">Use platform tools to block, mute, or restrict abusive accounts. You have the right to control your online space.</div>
+              </div>
+              <div class="tip-card">
+                <div class="tip-icon">🤝</div>
+                <div class="tip-title">Talk to Someone</div>
+                <div class="tip-body">Tell a trusted adult, friend, or counselor. Cyberbullying is not your fault and you don't have to face it alone.</div>
+              </div>
+              <div class="tip-card">
+                <div class="tip-icon">🔒</div>
+                <div class="tip-title">Secure Your Accounts</div>
+                <div class="tip-body">Set accounts to private, review your followers, use strong passwords, and enable two-factor authentication on all platforms.</div>
+              </div>
+              <div class="tip-card">
+                <div class="tip-icon">🧘</div>
+                <div class="tip-title">Protect Your Mental Health</div>
+                <div class="tip-body">Take breaks from social media. Cyberbullying can cause real psychological harm. Seek professional support if needed.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report links -->
+          <div class="report-section">
+            <div class="section-eyebrow"><span class="eyebrow-line"></span>Report It<span class="eyebrow-line"></span></div>
+            <div class="report-grid">
+
+              <a class="report-card" href="https://support.google.com/youtube/answer/2802268" target="_blank" rel="noopener">
+                <div class="report-card-left">
+                  <div class="report-platform-icon yt">▶</div>
+                  <div class="report-platform-info">
+                    <div class="report-platform-name">YouTube</div>
+                    <div class="report-platform-desc">Report abusive comments, harassment, or hate speech directly on YouTube</div>
+                  </div>
+                </div>
+                <span class="report-arrow">→</span>
+              </a>
+
+              <a class="report-card" href="https://www.instagram.com/safety/bullying/" target="_blank" rel="noopener">
+                <div class="report-card-left">
+                  <div class="report-platform-icon ig">◎</div>
+                  <div class="report-platform-info">
+                    <div class="report-platform-name">Instagram</div>
+                    <div class="report-platform-desc">Instagram's anti-bullying tools and reporting center</div>
+                  </div>
+                </div>
+                <span class="report-arrow">→</span>
+              </a>
+
+              <a class="report-card" href="https://help.twitter.com/en/safety-and-security/report-abusive-behavior" target="_blank" rel="noopener">
+                <div class="report-card-left">
+                  <div class="report-platform-icon tw">✕</div>
+                  <div class="report-platform-info">
+                    <div class="report-platform-name">X (Twitter)</div>
+                    <div class="report-platform-desc">Report abusive behavior and harassment on X</div>
+                  </div>
+                </div>
+                <span class="report-arrow">→</span>
+              </a>
+
+              <a class="report-card" href="https://www.cyberbullying.gov" target="_blank" rel="noopener">
+                <div class="report-card-left">
+                  <div class="report-platform-icon gov">⬡</div>
+                  <div class="report-platform-info">
+                    <div class="report-platform-name">StopBullying.gov</div>
+                    <div class="report-platform-desc">Official US government resource for cyberbullying prevention and reporting</div>
+                  </div>
+                </div>
+                <span class="report-arrow">→</span>
+              </a>
+
+              <a class="report-card" href="https://www.tiktok.com/safety/en/anti-bullying/" target="_blank" rel="noopener">
+                <div class="report-card-left">
+                  <div class="report-platform-icon tt">♪</div>
+                  <div class="report-platform-info">
+                    <div class="report-platform-name">TikTok</div>
+                    <div class="report-platform-desc">TikTok's anti-bullying safety center and reporting tools</div>
+                  </div>
+                </div>
+                <span class="report-arrow">→</span>
+              </a>
+
+              <a class="report-card" href="https://www.ic3.gov" target="_blank" rel="noopener">
+                <div class="report-card-left">
+                  <div class="report-platform-icon fbi">◆</div>
+                  <div class="report-platform-info">
+                    <div class="report-platform-name">FBI IC3</div>
+                    <div class="report-platform-desc">Report cybercrime including severe online harassment and threats</div>
+                  </div>
+                </div>
+                <span class="report-arrow">→</span>
+              </a>
+
+            </div>
+          </div>
+
+          <!-- Emergency box -->
+          <div class="emergency-box">
+            <div class="emergency-icon">🆘</div>
+            <div class="emergency-info">
+              <div class="emergency-title">Need Immediate Help?</div>
+              <div class="emergency-body">If you're in crisis or feeling unsafe, please reach out immediately.</div>
+            </div>
+            <div class="emergency-contacts">
+              <a href="tel:988" class="emergency-link">📞 988 Crisis Lifeline</a>
+              <a href="https://www.crisistextline.org" target="_blank" class="emergency-link">💬 Crisis Text Line</a>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /tab-prevention -->
 
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
-      <p>SafeGuard AI — For educational &amp; research purposes only</p>
-      <p class="footer-sub">Powered by NLP Classification Model · Flask Backend Required</p>
+      <span>SafeGuard AI</span>
+      <span class="footer-dot">·</span>
+      <span>Educational &amp; Research Use Only</span>
+      <span class="footer-dot">·</span>
+      <span>Flask + YouTube Data API v3</span>
     </footer>
 
-  </div>
+  </div><!-- /page-wrapper -->
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

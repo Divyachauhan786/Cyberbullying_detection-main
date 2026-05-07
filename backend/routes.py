@@ -1,31 +1,31 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import request, jsonify
+from backend.youtube_utils import get_comments
 from ml.predict import predict_text
 
-main = Blueprint("main", __name__)
+@app.route('/analyze_youtube', methods=['POST'])
+def analyze_youtube():
+    data = request.get_json()
+    url = data.get("url")
 
-@main.route("/")
-def home():
-    return render_template("index.html")
+    comments = get_comments(url)
 
-@main.route("/predict", methods=["POST"])
-def predict():
-    try:
-        data = request.get_json()
-        text = data.get("text", "")
+    results = []
+    bullying_count = 0
 
-        print("📩 Text received:", text)
+    for c in comments:
+        result = predict_text(c["comment"])
 
-        prediction = predict_text(text)
+        if result == 1:
+            bullying_count += 1
 
-        print("✅ Prediction:", prediction)
-
-        return jsonify({
-            "prediction": int(prediction)
-            "confidence" = round(float(np.max(probs)), 4)
+        results.append({
+            "author": c["author"],
+            "comment": c["comment"],
+            "bullying": "Yes" if result == 1 else "No"
         })
 
-    except Exception as e:
-        print("❌ ERROR:", str(e))
-        return jsonify({
-            "error": str(e)
-        }), 500
+    return jsonify({
+        "total_comments": len(comments),
+        "bullying_count": bullying_count,
+        "results": results
+    })
